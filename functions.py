@@ -11,14 +11,26 @@ client = OpenAI(api_key=credentials.OpenAI_API_KEY)
 
 # parsing functions
 def parse_pdf(path):
+    """
+    input:
+    path: filepath 
+    """
     with pdfplumber.open(path) as pdf: 
         return "\n".join((p.extract_text() or "") for p in pdf.pages)
     
 def parse_image(path):
+    """
+    input:
+    path: filepath 
+    """
     pytesseract.pytesseract.tesseract_cmd = credentials.tesseract_cmd
     return pytesseract.image_to_string(Image.open(path))
 
 def parse_mp3(path):
+    """
+    input:
+    path: filepath 
+    """
     with open(path, "rb") as audio_file:
         transcript = client.audio.transcriptions.create(
             file=audio_file,
@@ -74,6 +86,12 @@ tools = [
 
 # LLM decides which tools to use
 def extract_with_llm(path):
+    """
+    LLM decides which tool to parse text, then parser is used to extract text from file.
+
+    input:
+    path: filepath 
+    """
     task = f"choose the correct tool for this file: {path}"
     r = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -115,6 +133,13 @@ template = """
 """
     
 def convert_to_markdown(text):
+    """
+    Function returns a json with 2 keys, file name and markdown (filled in template).
+    These are based off the content of the extracted text.
+
+    Input:
+    text: extracted content of file
+    """
     prompt = f"""
     Fill the following markdown template using the text that is passed in as well
     create a suitable file name in kebab case based on passed in text. 
@@ -148,6 +173,12 @@ def convert_to_markdown(text):
 
 # natural language trigger
 def parse_request(request):
+    """
+    Function extracts the directory of files to be processed from user prompt
+
+    Input:
+    request: User prompt that contains the folder path for files to be processed.
+    """
     prompt = f"""
 Extract the input folder from the user's request.
 Return JSON only with:

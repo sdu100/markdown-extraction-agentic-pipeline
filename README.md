@@ -32,7 +32,9 @@ This pipeline processes PDFs, images, and MP3 files, extracts their content and 
     # run the pipeline
     run("process all the folders and create markdowns of content within in ./sample_docs")
 
--- requires --
+-- requirements --
+    Installation of requirements.txt using pip install -r requirements.txt
+
     credentials.py file containing:
         openAI_API_KEY = "key"
         tesseract_cmd = r"path to tesseract application"
