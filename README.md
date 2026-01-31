@@ -3,6 +3,7 @@
 This pipeline processes PDFs, images, and MP3 files, extracts their content and converts it into a structured markdown file using an OpenAI LLM.
 
 -- How it works -- 
+
     - Automatic file type detection (LLM):
         - PDFs are parsed using pdfplumber
         - images are parsed using tesseract
@@ -25,6 +26,7 @@ This pipeline processes PDFs, images, and MP3 files, extracts their content and 
 
 
  -- Usage --
+ 
     Use the main.py file:
 
     import functions
@@ -33,6 +35,7 @@ This pipeline processes PDFs, images, and MP3 files, extracts their content and 
     run("process all the folders and create markdowns of content within in ./sample_docs")
 
 -- requires --
+
     credentials.py file containing:
         openAI_API_KEY = "key"
         tesseract_cmd = r"path to tesseract application"
